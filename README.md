@@ -2,7 +2,16 @@
 
 This script, `srt_to_audition.py`, converts SRT subtitle files into CSV format compatible with Adobe Audition's markers. It uses the video file's frame rate to ensure accurate synchronization of markers.
 
-This script is intended to be used in the realm of Audio Decription mixing, where the SRT file is the AD script. The video file is used in order to properly align the AD cues along the timeline. Feel free to adapt this script for your purposes.
+This script is intended to be used in the realm of Audio Description mixing, where the SRT file is the AD script. The video file is used in order to properly align the AD cues along the timeline. Feel free to adapt this script for your purposes.
+
+## Features
+
+- **Frame Rate Synchronization**: Uses the video file's frame rate to accurately align subtitles with the timeline in Adobe Audition.
+- **Interactive Mode**: If no arguments are provided, the script will interactively ask for the necessary file paths.
+- **Indicator Processing**: Detects and processes cues with indicators like [FAST] or [FAST-ish], separating them into the "Description" field for enhanced cue context.
+- **Error Handling**: Includes basic error checking for file existence and permissions, ensuring a smooth and informative user experience.
+- **Easy to Use**: Simple command-line execution with clear instructions for both technical and non-technical users.
+- **Customizable Output**: Generates a CSV file that can be easily imported into Adobe Audition, with options to modify script behavior to fit various workflows.
 
 ## Prerequisites
 
