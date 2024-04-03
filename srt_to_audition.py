@@ -1,8 +1,8 @@
+import sys
 from moviepy.editor import VideoFileClip
 import pandas as pd
-import re
+import re  # Importing the re module
 from datetime import datetime, timedelta
-import sys
 
 # Function to convert time string to timedelta
 def str_to_timedelta(time_str):
@@ -39,24 +39,30 @@ def convert_srt_to_csv(srt_file_path, video_file_path):
             end_time = str_to_timedelta(times[1])
             duration = end_time - start_time
             text = ' '.join(lines[2:]).replace('\n', ' ')
+            # Using the description text as the Name field value
             csv_data.append({
-                'Name': f'Marker {sequence}',
+                'Name': text,
                 'Start': timedelta_to_smpte_timecode(start_time, fps),
                 'Duration': timedelta_to_smpte_timecode(duration, fps),
-                'Time Format': f'{int(fps)} fps',
+                'Time Format': f'{fps} fps',
                 'Type': 'Cue',
-                'Description': text
+                'Description': ''  # Keeping Description empty
             })
 
-    csv_df = pd.DataFrame(csv_data)
-    csv_df.to_csv(csv_file_path, index=False, sep='\t', header=True)
+    pd.DataFrame(csv_data).to_csv(csv_file_path, index=False, sep='\t', header=True)
     print(f"Converted SRT file saved to {csv_file_path}")
     print(f"The frame rate of the video is: {fps} fps")
 
+def get_user_input(prompt):
+    return input(prompt)
+
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python script.py <source_srt_file_path> <source_video_file_path>")
-    else:
+    if len(sys.argv) == 3:
         srt_file_path = sys.argv[1]
         video_file_path = sys.argv[2]
-        convert_srt_to_csv(srt_file_path, video_file_path)
+    else:
+        print("You did not provide the required SRT and video file paths.")
+        srt_file_path = get_user_input("Please enter the full path to the SRT file: ")
+        video_file_path = get_user_input("Please enter the full path to the video file: ")
+
+    convert_srt_to_csv(srt_file_path, video_file_path)
